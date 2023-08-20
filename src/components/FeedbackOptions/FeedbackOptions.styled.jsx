@@ -14,11 +14,11 @@ export const GoodBtn = styled.button`
   &:hover {
     background-color: ${({ children }) => {
       switch (children) {
-        case 'Good':
+        case 'good':
           return 'green';
-        case 'Neutral':
+        case 'neutral':
           return 'yellow';
-        case 'Bad':
+        case 'bad':
           return 'red';
         default:
           return 'white';
@@ -27,11 +27,11 @@ export const GoodBtn = styled.button`
     box-shadow: 1px 1px 4px 5px
       ${({ children }) => {
         switch (children) {
-          case 'Good':
+          case 'good':
             return 'green';
-          case 'Neutral':
+          case 'neutral':
             return 'yellow';
-          case 'Bad':
+          case 'bad':
             return 'red';
           default:
             return 'white';

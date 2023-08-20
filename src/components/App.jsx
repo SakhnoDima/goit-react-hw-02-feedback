@@ -12,45 +12,48 @@ export class App extends Component {
     neutral: 0,
     bad: 0,
   };
-  goodIncrement = () => {
-    this.setState(prevState => ({
-      good: prevState.good + 1,
-    }));
+  onLeaveFeedback = state => {
+    this.setState(prevState => ({ [state]: prevState[state] + 1 }));
   };
-  neutralIncrement = evt => {
-    this.setState(prevState => ({
-      neutral: prevState.neutral + 1,
-    }));
-  };
-  badIncrement = evt => {
-    this.setState(prevState => ({
-      bad: prevState.bad + 1,
-    }));
-  };
+  // goodIncrement = () => {
+  //   this.setState(prevState => ({
+  //     good: prevState.good + 1,
+  //   }));
+  // };
+  // neutralIncrement = evt => {
+  //   this.setState(prevState => ({
+  //     neutral: prevState.neutral + 1,
+  //   }));
+  // };
+  // badIncrement = evt => {
+  //   this.setState(prevState => ({
+  //     bad: prevState.bad + 1,
+  //   }));
+  // };
 
   countTotalFeedback() {
     const { good, neutral, bad } = this.state;
-    const sum = good + bad + neutral;
-    return sum;
+    return good + bad + neutral;
   }
   countPositiveFeedbackPercentage() {
-    const { good, neutral, bad } = this.state;
-    let goodPercent = Math.round((good * 100) / Number(good + bad + neutral));
+    const { good } = this.state;
+    const total = this.countTotalFeedback();
+    let goodPercent = Math.round((good * 100) / Number(total));
     if (isNaN(goodPercent)) goodPercent = 0;
     return goodPercent;
   }
 
   render() {
     const { good, neutral, bad } = this.state;
+    const options = Object.keys(this.state);
     return (
       <>
         <Title title={'Please leave feedback'}>
           <FeedbackOptions
-            goodIncrement={this.goodIncrement}
-            neutralIncrement={this.neutralIncrement}
-            badIncrement={this.badIncrement}
+            options={options}
+            onLeaveFeedback={this.onLeaveFeedback}
           />
-          {this.countTotalFeedback() <= 0 ? (
+          {this.countTotalFeedback() === 0 ? (
             <Notification message={'There is no feedback'} />
           ) : (
             <Statistics
